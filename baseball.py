@@ -6,19 +6,23 @@ import numpy as np
 import json
 import time
 
-'''
-paramaters for 
-cur_date: date of the games
-pitchers_games: number of previous games for pitchers stats
-batters_games: number of previous games for batters stats
-teams_games: number of previous games for team stats
-'''
 cur_date = pd.to_datetime('today').date()
-pitchers_games = 5
-batters_games = 7
-teams_games = 5
+def main():
+	'''
+	paramaters for get_stats 
+	cur_date: date of the games
+	pitchers_games: number of previous games for pitchers stats
+	batters_games: number of previous games for batters stats
+	teams_games: number of previous games for team stats
+	'''
+	pitchers_games = 5
+	batters_games = 7
+	teams_games = 5
+	#runs the main function using specified paramaters
+	get_stats(str(cur_date),pitchers_games,batters_games,teams_games)
 
-#main function
+
+#main function for getting mlb stats
 def get_stats(date,prev_pit,prev_bat,prev_team):
 
 	#creates a connection to get the lineups for all teams on the specified date
@@ -37,7 +41,7 @@ def get_stats(date,prev_pit,prev_bat,prev_team):
 	for game in games:
 
 		# prints the game number
-		print("Game " + str(index))
+		print("Game " + str(game_number))
 
 		# finds the div objects for the home and away team
 		teams = game.find_all("div", {"class" : "team-data"})
@@ -91,6 +95,7 @@ def get_stats(date,prev_pit,prev_bat,prev_team):
 		print('\tPitcher: ' + home_pitch_name)
 		print('\t\t' + str(home_pitch))
 
+		'''
 		# iterates through each batter in the home team's lineup
 		for batter in home_lineup:
 
@@ -112,6 +117,7 @@ def get_stats(date,prev_pit,prev_bat,prev_team):
 			print('\t\t' + str(last_x))
 			print('\t\t' + str(vs))
 
+		'''
 		# prints the away team's name and statistics
 		print(away_name)
 		print(away_summary)
@@ -120,6 +126,7 @@ def get_stats(date,prev_pit,prev_bat,prev_team):
 		print('\tPitcher: ' + away_pitch_name)
 		print('\t\t' + str(away_pitch))
 	
+		'''
 		# iterates through each batter in the home team's lineup
 		for batter in away_lineup:
 
@@ -141,6 +148,7 @@ def get_stats(date,prev_pit,prev_bat,prev_team):
 			print('\t\t' + str(last_x))
 			print('\t\t' + str(vs))
 
+		'''
 		#updates the game number
 		game_number += 1
 
@@ -389,5 +397,5 @@ def try_x(func,params,x):
 			cur += 1
 	return False,'No data available'
 
-#runs the main function using specified paramaters
-get_stats(str(cur_date),pitchers_games,batters_games,teams_games)
+if __name__ == "__main__":
+    main()
